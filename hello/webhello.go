@@ -21,7 +21,7 @@ func main() {
 
 
 type SpdyAlternate struct {
-  Handler http.Handler
+  http.Handler
   Addr string
 }
 
@@ -31,9 +31,13 @@ func (alt SpdyAlternate) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 }
 
 func main() {
+  var _ = new(spdy.Server)
+  fmt.Println("hello")
   // add handlers...
-  // go spdy.ListenAndServe(":8081", nil)
-  spdy.ListenAndServe(":8081", nil)
-  http.ListenAndServe(":8080",
-  SpdyAlternate{http.DefaultServeMux, "8081:npn-spdy/2"})
+   go spdy.ListenAndServe("0.0.0.0:8081", nil)
+  // http.HandleFunc("/", handler) // redirect all urls to the handler function
+  // http.ListenAndServe("0.0.0.0:8000", nil) // listen for connections at port 9999 on the local machine
+  // spdy.ListenAndServe("0.0.0.0:8081", nil)
+  http.ListenAndServe("0.0.0.0:8080", SpdyAlternate{http.DefaultServeMux, "8081:npn-spdy/2"} )
+  fmt.Println("hello")
 }

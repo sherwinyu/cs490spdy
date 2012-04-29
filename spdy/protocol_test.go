@@ -7,8 +7,8 @@ package spdy
 import (
 	"bytes"
 	"compress/zlib"
-	"http"
-	"os"
+	"io"
+	"net/http"
 	"testing"
 )
 
@@ -16,7 +16,7 @@ type frameIoTest struct {
 	desc      string
 	data      []byte
 	frame     Frame
-	readError os.Error
+	readError error
 	readOnly  bool
 }
 
@@ -144,7 +144,7 @@ var frameIoTests = []frameIoTest{
 			0x00, 0x00, 0x00, 0x05,
 		},
 		Frame{},
-		os.EOF,
+		io.EOF,
 		true,
 	},
 }
