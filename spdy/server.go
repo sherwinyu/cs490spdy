@@ -2,20 +2,19 @@
 
 package spdy
 
- /*
 import (
-  "fmt"
-  "bytes"
-  "crypto/rand"
-  "crypto/tls"
-  "encoding/binary"
-  "errors"
-  "io"
+  //"fmt"
+  //"bytes"
+  //"crypto/rand"
+  //"crypto/tls"
+  //"encoding/binary"
+  //"errors"
+  //"io"
   "net"
-  "net/url"
+  //"net/url"
   "net/http"
-  "strconv"
-  "time"
+  //"strconv"
+  //"time"
 )
 
 // ListenAndServe creates a new Server that serves on the given address.  If
@@ -26,6 +25,8 @@ func ListenAndServe(addr string, handler http.Handler) error {
 }
 
 // ListenAndServeTLS acts like ListenAndServe except it uses TLS.
+
+/*
 func ListenAndServeTLS(addr string, certFile, keyFile string, handler http.Handler) (err error) {
   config := &tls.Config{
     Rand:         rand.Reader,
@@ -45,6 +46,7 @@ func ListenAndServeTLS(addr string, certFile, keyFile string, handler http.Handl
   tlsListener := tls.NewListener(conn, config)
   return (&Server{addr, handler}).Serve(tlsListener)
 }
+*/
 
 // A Server handles incoming SPDY connections with HTTP handlers.
 type Server struct {
@@ -74,6 +76,7 @@ func (srv *Server) Serve(l net.Listener) error {
   if handler == nil {
     handler = http.DefaultServeMux
   }
+   /*
   for {
     c, err := l.Accept()
     if err != nil {
@@ -85,9 +88,11 @@ func (srv *Server) Serve(l net.Listener) error {
     }
     go s.serve()
   }
+  */
   return nil
 }
 
+/*
 // A session manages a single TCP connection to a client.
 type session struct {
   c       net.Conn
