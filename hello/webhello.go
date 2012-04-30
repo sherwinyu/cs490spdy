@@ -4,6 +4,8 @@ import (
   "net/http" //package for http based web programs
   "fmt"
   "cs490/spdy"
+  "html"
+  "log"
 )
 
 func handler(w http.ResponseWriter, r *http.Request) {
@@ -34,10 +36,16 @@ func main() {
   var _ = new(spdy.Server)
   fmt.Println("hello")
   // add handlers...
-   go spdy.ListenAndServe("0.0.0.0:8081", nil)
+  go spdy.ListenAndServe("0.0.0.0:5555", nil)
+
+  http.HandleFunc("/bar", func(w http.ResponseWriter, r *http.Request) {
+      fmt.Println("hello...")
+      fmt.Fprintf(w, "Hello, %q", html.EscapeString(r.URL.Path))
+    })
+    log.Fatal(http.ListenAndServe("0.0.0.0:8000", SpdyAlternate{http.DefaultServeMux, "5555:npn-spdy/2"}))
   // http.HandleFunc("/", handler) // redirect all urls to the handler function
   // http.ListenAndServe("0.0.0.0:8000", nil) // listen for connections at port 9999 on the local machine
   // spdy.ListenAndServe("0.0.0.0:8081", nil)
-  http.ListenAndServe("0.0.0.0:8080", SpdyAlternate{http.DefaultServeMux, "8081:npn-spdy/2"} )
+  // http.ListenAndServe("0.0.0.0:8080", SpdyAlternate{http.DefaultServeMux, "8081:npn-spdy/2"} )
   fmt.Println("hello")
 }

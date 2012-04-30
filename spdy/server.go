@@ -3,13 +3,13 @@
 package spdy
 
 import (
-  //"fmt"
-  //"bytes"
+  "fmt"
+  "bytes"
   //"crypto/rand"
   //"crypto/tls"
   //"encoding/binary"
   //"errors"
-  //"io"
+  "io"
   "net"
   //"net/url"
   "net/http"
@@ -62,6 +62,7 @@ func (srv *Server) ListenAndServe() error {
     addr = ":http"
   }
   l, err := net.Listen("tcp", addr)
+  fmt.Println("Spdy listening on... %v", l.Addr())
   if err != nil {
     return err
   }
@@ -76,20 +77,41 @@ func (srv *Server) Serve(l net.Listener) error {
   if handler == nil {
     handler = http.DefaultServeMux
   }
-   /*
   for {
-    c, err := l.Accept()
+    fmt.Println("Spdy waiting for connections...")
+    conn, err := l.Accept()
+    fmt.Println("...Spdy accepted connection... %v->%v", conn.RemoteAddr(), conn.LocalAddr())
     if err != nil {
       return err
     }
-    s, err := newSession(c, handler)
-    if err != nil {
-      return err
-    }
-    go s.serve()
+    go func(c net.Conn) {
+      // Echo all incoming data.
+      fmt.Println("echoing data...")
+      bb := new(bytes.Buffer)
+      io.Copy(bb, c)
+      // Shut down the connection.
+      fmt.Println("spdyrequest: %s", bb.String())
+      fmt.Println("closing conn...")
+      c.Close()
+    }(conn)
+    // s, err := newSession(c, handler)
+    // if err != nil {
+    // return err
+    // }
+    // go s.serve()
   }
+  /*
   */
   return nil
+}
+
+type session struct {
+  conn net.Conn
+  handler http.Handler
+  frameIn, frameOut chan Frame
+  // streams map[uint32]*serverStream
+  headerReader *HeaderReader
+  headerWriter *HeaderWriter
 }
 
 /*
