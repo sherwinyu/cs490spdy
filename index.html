@@ -1,0 +1,49 @@
+<!--
+   Credit to Samuel Spaulding's 2010 CS290 Web Pages for Layout
+  -->
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE>Sherwin Yu | A SPDY Server in Go</TITLE>
+	<STYLE TYPE="text/css">
+	<!--
+		H2.ctl { font-family: "Lohit Hindi" }
+		H3.ctl { font-family: "Lohit Hindi" }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<H2 CLASS="western">Utilizing Deterministic Guarantees in a Database to Optimize Checkpointing</H2>
+<P>by Sherwin Yu<BR><BR>Advisor: <A HREF="http://cs-www.cs.yale.edu/homes/yry/">Yang (Richard) Yang</A></P>
+<H3 CLASS="western">Abstract</H3>
+<P>
+The purpose of this project is to implement and benchmark a minimalistic SPDY web server using Go. Go was designed as a systems programming language and is relatively new; writing
+a web server from scratch will be an excellent case study of its effectiveness as a systems programming language. SPDY is also a relatively new experimental protocol, and as of
+writing, no open source Go implementation of a SPDY server exists. 
+</P>
+<P>
+SPDY is new network protocol developed at Google designed to reduce web page load latency. It is an application-layer protocol that complements HTTP by improving how HTTP
+requests and responses are handled. SPDY prioritizes and multiplexes web page resources to minimize the number connections needed; by multiplexing concurrent streams, many
+requests and responses are interleaved on the same channel, so greater network efficiency is achieved. SPDY supports different reequest priorities to prevent the client from
+blocking requests on in limited bandwidth situations. The client can assign different priorities to each item it requests and the server will respond appropriately.  SPDY also features HTTP header compression, resulting in less data to
+transfer.
+</P>
+<P>
+Go is a systems programming language developed and supported by Google with native support for concurrency. Go was designed with expressiveness, conciseness, and code cleaness in
+mind for writing applications on multicore and networked machines. Go is compiled, statically typed, and garbage collected, yet was designed to have the expressiveness of a
+dynamically typed interpreted language. Go features Goroutines, lightweight functions executing with other
+goroutines in the same address space. Goroutines are multiplexed onto multiple OS threads by the Go runtime, hiding many of the complexities of thread creation and management.
+
+</P>
+
+
+<H3 CLASS="western">Resources</H3>
+<P><A HREF="490paper.pdf">Paper</A><BR>
+<A HREF="490proposal.pdf">Proposal</A><BR>
+</P>
+</BODY>
+</HTML>
+
+
